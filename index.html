@@ -1,3 +1,6 @@
+Here is the full code with the original purple theme and the new, categorized skills section.
+
+```html
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -12,6 +15,7 @@
             theme: {
                 extend: {
                     colors: {
+                        // Original Purple Theme Palette
                         primary: {
                             50: '#f5f3ff',
                             100: '#ede9fe',
@@ -30,10 +34,9 @@
         }
     </script>
     <style>
-        /* Removed hard-coded body background color to allow Tailwind toggle */
-        
+        /* Updated CSS with original purple color */
         .gradient-text {
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa); /* Original purple gradient */
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -42,7 +45,7 @@
         .timeline-dot {
             width: 12px;
             height: 12px;
-            background: #8b5cf6;
+            background: #8b5cf6; /* Original purple */
             border-radius: 50%;
             position: absolute;
             left: -6px;
@@ -55,18 +58,18 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background: #8b5cf6;
+            background: #8b5cf6; /* Original purple */
         }
         
         .typing-text {
             display: inline-block;
-            border-right: 3px solid #8b5cf6;
+            border-right: 3px solid #8b5cf6; /* Original purple */
             animation: blink-caret 0.75s step-end infinite;
         }
         
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: #8b5cf6 }
+            50% { border-color: #8b5cf6 } /* Original purple */
         }
     </style>
 </head>
@@ -202,56 +205,42 @@
                     
                     <div class="space-y-6">
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">JavaScript/TypeScript</span>
-                                <span class="text-primary-400">90%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                                <div class="bg-primary-600 h-2 rounded-full" style="width: 90%"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">React/Next.js</span>
-                                <span class="text-primary-400">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                                <div class="bg-primary-600 h-2 rounded-full" style="width: 85%"></div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Frontend</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">JavaScript</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">TypeScript</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">React</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Next.js</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Tailwind CSS</span>
                             </div>
                         </div>
-                        
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Node.js/Express</span>
-                                <span class="text-primary-400">80%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                                <div class="bg-primary-600 h-2 rounded-full" style="width: 80%"></div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Backend</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Node.js</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Express</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Python</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Django</span>
                             </div>
                         </div>
-                        
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Python/Django</span>
-                                <span class="text-primary-400">75%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                                <div class="bg-primary-600 h-2 rounded-full" style="width: 75%"></div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Databases</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">MongoDB</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">MySQL</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">PostgreSQL</span>
                             </div>
                         </div>
-                        
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-gray-700 dark:text-gray-300">Database (SQL/NoSQL)</span>
-                                <span class="text-primary-400">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                                <div class="bg-primary-600 h-2 rounded-full" style="width: 85%"></div>
+                            <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Tools</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Git</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Docker</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/5Ofigma text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Figma</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
             </div>
         </div>
     </section>
@@ -635,3 +624,4 @@
     </script>
 </body>
 </html>
+```
