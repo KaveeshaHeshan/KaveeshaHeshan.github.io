@@ -1,6 +1,3 @@
-Here is the full code with the original purple theme and the new, categorized skills section.
-
-```html
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -9,24 +6,25 @@ Here is the full code with the original purple theme and the new, categorized sk
     <title>Kaveesha Heshan - Software Engineer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        // Original Purple Theme Palette
+                        // New Lime Green Theme Palette
                         primary: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
+                            50: '#f7fee7',
+                            100: '#ecfccb',
+                            200: '#d9f99d',
+                            300: '#bef264',
+                            400: '#a3e635',
+                            500: '#84cc16',
+                            600: '#65a30d',
+                            700: '#4d7c0f',
+                            800: '#3f6212',
+                            900: '#365314',
                         }
                     }
                 }
@@ -34,9 +32,9 @@ Here is the full code with the original purple theme and the new, categorized sk
         }
     </script>
     <style>
-        /* Updated CSS with original purple color */
+        /* Updated CSS with new lime green color */
         .gradient-text {
-            background: linear-gradient(135deg, #8b5cf6, #a78bfa); /* Original purple gradient */
+            background: linear-gradient(135deg, #84cc16, #a3e635); /* New lime gradient */
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -45,7 +43,7 @@ Here is the full code with the original purple theme and the new, categorized sk
         .timeline-dot {
             width: 12px;
             height: 12px;
-            background: #8b5cf6; /* Original purple */
+            background: #84cc16; /* New lime */
             border-radius: 50%;
             position: absolute;
             left: -6px;
@@ -58,18 +56,18 @@ Here is the full code with the original purple theme and the new, categorized sk
             top: 0;
             bottom: 0;
             width: 1px;
-            background: #8b5cf6; /* Original purple */
+            background: #84cc16; /* New lime */
         }
         
         .typing-text {
             display: inline-block;
-            border-right: 3px solid #8b5cf6; /* Original purple */
+            border-right: 3px solid #84cc16; /* New lime */
             animation: blink-caret 0.75s step-end infinite;
         }
         
         @keyframes blink-caret {
             from, to { border-color: transparent }
-            50% { border-color: #8b5cf6 } /* Original purple */
+            50% { border-color: #84cc16 } /* New lime */
         }
     </style>
 </head>
@@ -158,6 +156,7 @@ Here is the full code with the original purple theme and the new, categorized sk
                                 <img src="/asset/kaveesha.JPG" alt="Kaveesha Heshan" class="w-full h-full object-cover">
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -236,7 +235,7 @@ Here is the full code with the original purple theme and the new, categorized sk
                             <div class="flex flex-wrap gap-2">
                                 <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Git</span>
                                 <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Docker</span>
-                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/5Ofigma text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Figma</span>
+                                <span class="px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Figma</span>
                             </div>
                         </div>
                     </div>
@@ -624,4 +623,3 @@ Here is the full code with the original purple theme and the new, categorized sk
     </script>
 </body>
 </html>
-```
