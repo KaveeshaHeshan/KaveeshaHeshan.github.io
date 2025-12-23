@@ -101,13 +101,12 @@
     }
 
     #mobile-menu.menu-open {
-      max-height: 420px; /* enough for items */
+      max-height: 420px;
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
 
-    /* Stagger items */
     #mobile-menu .mobile-link {
       opacity: 0;
       transform: translateY(-6px);
@@ -141,19 +140,131 @@
       transform: translateY(0);
     }
 
-    .chip {
-      opacity: 0;
-      transform: scale(.95) translateY(8px);
-      transition: opacity .5s ease, transform .5s ease, box-shadow .25s ease;
-      will-change: transform, opacity;
+    /* =========================
+       ✅ NEW SKILLS (CAPSULE UI + SCROLL)
+       ========================= */
+    .skills-wrap {
+      margin-top: 32px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .reveal.show .chip {
+
+    .skills-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 768px) {
+      .skills-row { grid-template-columns: 1fr; gap: 10px; }
+    }
+
+    .skills-row-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+
+    .skills-marquee {
+      position: relative;
+      overflow: hidden;
+      padding: 10px 0;
+      border-radius: 18px;
+    }
+
+    .skills-marquee::before,
+    .skills-marquee::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 70px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .skills-marquee::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0));
+    }
+    .skills-marquee::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+    }
+
+    .skills-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .skill-pill {
+      position: relative;
+      min-width: 210px;
+      height: 150px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(163,230,53,0.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      backdrop-filter: blur(10px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+    }
+
+    .skill-pill:hover {
+      transform: translateY(-6px);
+      border-color: rgba(163,230,53,0.38);
+      box-shadow: 0 0 32px rgba(163,230,53,0.20);
+    }
+
+    .pill-glow {
+      position: absolute;
+      inset: -45%;
+      background: radial-gradient(circle at 30% 22%, rgba(163,230,53,0.18), transparent 55%);
+      filter: blur(10px);
       opacity: 1;
-      transform: scale(1) translateY(0);
+      transform: rotate(10deg);
     }
-    .chip:hover {
-      transform: scale(1.06);
-      box-shadow: 0 10px 22px rgba(132, 204, 22, .18);
+
+    .pill-icon {
+      position: relative;
+      z-index: 1;
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      color: #a3e635;
+      filter: drop-shadow(0 0 12px rgba(163,230,53,0.25));
+    }
+    .pill-icon svg { width: 44px; height: 44px; }
+
+    .pill-text {
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #e5e7eb;
+      letter-spacing: 0.2px;
+    }
+
+    @keyframes marquee-ltr {
+      from { transform: translateX(-50%); }
+      to   { transform: translateX(0%); }
+    }
+    @keyframes marquee-rtl {
+      from { transform: translateX(0%); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .skills-marquee:hover .skills-track { animation-play-state: paused; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .skills-track { animation: none !important; transform: translateX(0) !important; }
     }
   </style>
 </head>
@@ -188,14 +299,14 @@
           </button>
         </div>
 
-        <!-- ✅ Mobile Button (menu ↔ close) -->
+        <!-- Mobile Button -->
         <button id="mobile-menu-btn" class="md:hidden p-2" aria-label="Toggle menu" aria-expanded="false">
           <i id="icon-menu" data-lucide="menu" class="w-6 h-6"></i>
           <i id="icon-close" data-lucide="x" class="w-6 h-6 hidden"></i>
         </button>
       </div>
 
-      <!-- ✅ Mobile Menu (animated) -->
+      <!-- Mobile Menu -->
       <div id="mobile-menu" class="md:hidden pb-4">
         <div class="flex flex-col space-y-3">
           <a href="#home" class="mobile-link hover:text-primary-400 transition-colors">Home</a>
@@ -218,10 +329,8 @@
 
   <!-- ================= HOME ================= -->
   <section id="home" class="relative min-h-screen flex items-center px-6 lg:px-8 pt-28 overflow-hidden">
-    <!-- ✅ Three.js background -->
     <div id="three-bg" class="absolute inset-0 -z-10"></div>
 
-    <!-- ✅ Keep content above canvas -->
     <div class="relative z-10 max-w-7xl mx-auto w-full pl-12 lg:pl-16 grid lg:grid-cols-2 gap-12 items-center">
       <div>
         <h1 class="text-5xl lg:text-7xl font-bold mb-8">
@@ -258,101 +367,290 @@
     </div>
   </section>
 
-  <!-- ================= ABOUT (UPDATED WITH ANIMATION) ================= -->
- <section id="about" class="py-20 px-6 lg:px-8 reveal">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-4xl lg:text-5xl font-bold mb-12">
-      <span class="gradient-text">About Me</span>
-    </h2>
-
-    <!-- About Text (Top) -->
-    <div class="reveal-stagger">
-      <p class="text-gray-700 dark:text-gray-300 text-lg mb-6 leading-relaxed">
-        With over X years of experience in software development, I specialize in creating 
-        robust and scalable applications. My journey in tech started with a curiosity 
-        about how things work, which led me to pursue computer science and develop 
-        expertise in various programming languages and frameworks.
-      </p>
-
-      <p class="text-gray-700 dark:text-gray-300 text-lg mb-8 leading-relaxed">
-        I'm passionate about clean code, user experience, and staying up-to-date with 
-        the latest technologies. When I'm not coding, you can find me contributing to 
-        open-source projects or learning about emerging tech trends.
-      </p>
-
-      <div class="space-y-4 mb-12">
-        <div class="flex items-center space-x-4">
-          <i data-lucide="mail" class="w-6 h-6 text-primary-400"></i>
-          <span class="text-gray-700 dark:text-gray-300">kaveesha.h927@gmail.com</span>
-        </div>
-        <div class="flex items-center space-x-4">
-          <i data-lucide="map-pin" class="w-6 h-6 text-primary-400"></i>
-          <span class="text-gray-700 dark:text-gray-300">Sri Lanka</span>
-        </div>
-        <div class="flex items-center space-x-4">
-          <i data-lucide="phone" class="w-6 h-6 text-primary-400"></i>
-          <span class="text-gray-700 dark:text-gray-300">0701452284</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ✅ Technical Skills (Bottom) -->
-    <div>
-      <h3 class="text-2xl font-semibold mb-6 text-primary-400">Technical Skills</h3>
-
-      <div class="space-y-6">
-        <div>
-          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Frontend</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">JavaScript</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">TypeScript</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">React</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Next.js</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Tailwind CSS</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Backend</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Node.js</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Express</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Python</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Django</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Databases</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">MongoDB</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">MySQL</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">PostgreSQL</span>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Tools</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Git</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Docker</span>
-            <span class="chip px-4 py-2 bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">Figma</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-
-  <section id="education" class="py-20 px-6 lg:px-8">
+  <!-- ================= ABOUT (UPDATED + NEW SKILLS UI) ================= -->
+  <section id="about" class="py-20 px-6 lg:px-8 reveal">
     <div class="max-w-7xl mx-auto">
-      <h2 class="text-4xl font-bold mb-8">Education</h2>
-      <p class="text-gray-700 dark:text-gray-300">BSc (Hons) IT – Software Engineering (SLIIT)</p>
+      <h2 class="text-4xl lg:text-5xl font-bold mb-12">
+        <span class="gradient-text">About Me</span>
+      </h2>
+
+      <!-- About Text -->
+      <div class="reveal-stagger">
+        <p class="text-gray-700 dark:text-gray-300 text-lg mb-6 leading-relaxed">
+          With over X years of experience in software development, I specialize in creating
+          robust and scalable applications. My journey in tech started with a curiosity
+          about how things work, which led me to pursue computer science and develop
+          expertise in various programming languages and frameworks.
+        </p>
+
+        <p class="text-gray-700 dark:text-gray-300 text-lg mb-8 leading-relaxed">
+          I'm passionate about clean code, user experience, and staying up-to-date with
+          the latest technologies. When I'm not coding, you can find me contributing to
+          open-source projects or learning about emerging tech trends.
+        </p>
+
+        <div class="space-y-4 mb-10">
+          <div class="flex items-center space-x-4">
+            <i data-lucide="mail" class="w-6 h-6 text-primary-400"></i>
+            <span class="text-gray-700 dark:text-gray-300">kaveesha.h927@gmail.com</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <i data-lucide="map-pin" class="w-6 h-6 text-primary-400"></i>
+            <span class="text-gray-700 dark:text-gray-300">Sri Lanka</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <i data-lucide="phone" class="w-6 h-6 text-primary-400"></i>
+            <span class="text-gray-700 dark:text-gray-300">0701452284</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ✅ NEW Technical Skills (Capsule UI + Right/Left scrolling) -->
+      <div class="skills-wrap">
+        <h3 class="text-2xl font-semibold mb-6 text-primary-400">Technical Skills</h3>
+
+        <!-- Frontend (RTL) -->
+        <div class="skills-row">
+          <div class="skills-row-head">
+            <div class="skills-row-title">Frontend</div>
+          </div>
+
+          <div class="skills-marquee" data-direction="rtl" data-duration="18">
+            <div class="skills-track">
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="braces"></i></div>
+                <div class="pill-text">JavaScript</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="code-2"></i></div>
+                <div class="pill-text">TypeScript</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="atom"></i></div>
+                <div class="pill-text">React</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="layers"></i></div>
+                <div class="pill-text">Next.js</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="paintbrush"></i></div>
+                <div class="pill-text">Tailwind CSS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backend (LTR) -->
+        <div class="skills-row">
+          <div class="skills-row-head">
+            <div class="skills-row-title">Backend</div>
+          </div>
+
+          <div class="skills-marquee" data-direction="ltr" data-duration="20">
+            <div class="skills-track">
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="server"></i></div>
+                <div class="pill-text">Node.js</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="git-branch"></i></div>
+                <div class="pill-text">Express</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="code"></i></div>
+                <div class="pill-text">Python</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="shield"></i></div>
+                <div class="pill-text">Django</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Databases (RTL) -->
+        <div class="skills-row">
+          <div class="skills-row-head">
+            <div class="skills-row-title">Databases</div>
+          </div>
+
+          <div class="skills-marquee" data-direction="rtl" data-duration="19">
+            <div class="skills-track">
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="database"></i></div>
+                <div class="pill-text">MongoDB</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="database-zap"></i></div>
+                <div class="pill-text">MySQL</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="hard-drive"></i></div>
+                <div class="pill-text">PostgreSQL</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools (LTR) -->
+        <div class="skills-row">
+          <div class="skills-row-head">
+            <div class="skills-row-title">Tools</div>
+          </div>
+
+          <div class="skills-marquee" data-direction="ltr" data-duration="18">
+            <div class="skills-track">
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="git-fork"></i></div>
+                <div class="pill-text">Git</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="box"></i></div>
+                <div class="pill-text">Docker</div>
+              </div>
+
+              <div class="skill-pill">
+                <div class="pill-glow"></div>
+                <div class="pill-icon"><i data-lucide="pen-tool"></i></div>
+                <div class="pill-text">Figma</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </section>
+  
+ <!-- ================= EDUCATION ================= -->
+ <section id="education" class="py-20 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-gray-500 text-sm uppercase tracking-wider mb-3">WHAT I HAVE DONE SO FAR</p>
+                <h2 class="text-4xl lg:text-5xl font-bold">
+                    Education.
+                </h2>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="relative">
+                    <div class="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-px bg-gray-300 dark:bg-gray-700"></div>
+                    
+                    <div class="relative mb-16">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="md:text-right md:pr-12">
+                                <div class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-primary-600 transition-all">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                        BSc. (Hons) Information Technology Specialized in Software Engineering
+                                    </h3>
+                                    <h4 class="text-gray-600 dark:text-gray-400 mb-4">
+                                        Sri Lanka Institute of Information Technology (SLIIT)
+                                    </h4>
+                                    <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-2">
+                                        <li>• Currently reading for my Bachelors' Degree in Software Engineering (Bsc.(Hons) Information Technology Specialization in Software Engineering) at Srilanka Institute of Information Technology (SLIIT)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="hidden md:block"></div>
+                        </div>
+                        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <div class="w-12 h-12 bg-primary-600 rounded-full border-4 border-white dark:border-black flex items-center justify-center">
+                                <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="absolute left-full ml-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">October 2022 - Present</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative mb-16">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="hidden md:block"></div>
+                            <div class="md:pl-12">
+                                <div class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-primary-600 transition-all">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                        Advanced Level
+                                    </h3>
+                                    <h4 class="text-gray-600 dark:text-gray-400 mb-4">
+                                        Maris Stella College
+                                    </h4>
+                                    <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-2">
+                                        <li>• Passed General Certificate Advanced Level Exam in Technology stream with B (Science for Technology) and 2 C (Engineering Technology, Higher Maths) passes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <div class="w-12 h-12 bg-primary-600 rounded-full border-4 border-white dark:border-black flex items-center justify-center">
+                                <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="absolute right-full mr-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">2016 - 2019</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="md:text-right md:pr-12">
+                                <div class="bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 p-6 rounded-lg hover:border-primary-600 transition-all">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                                        Ordinary Level
+                                    </h3>
+                                    <h4 class="text-gray-600 dark:text-gray-400 mb-4">
+                                        Maris Stella College
+                                    </h4>
+                                    <ul class="text-gray-600 dark:text-gray-400 text-sm space-y-2">
+                                        <li>• Passed General Certificate Ordinary Level Exam with 5 A and 4 B passes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="hidden md:block"></div>
+                        </div>
+                        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <div class="w-12 h-12 bg-primary-600 rounded-full border-4 border-white dark:border-black flex items-center justify-center">
+                                <i data-lucide="award" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="absolute left-full ml-4 top-1/2 transform -translate-y-1/2 whitespace-nowrap">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">2006-2016</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     <!--education end-->
+
+
+
+  <!-- ================= PROJECTS ================= -->
 
   <section id="projects" class="py-20 px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
@@ -444,31 +742,35 @@
       });
     });
 
-    // ✅ About scroll reveal + chip stagger
+    // ✅ About scroll reveal
     (() => {
       const revealEls = document.querySelectorAll(".reveal");
-
-      const applyChipStagger = (section) => {
-        const chips = section.querySelectorAll(".chip");
-        chips.forEach((chip, idx) => {
-          chip.style.transitionDelay = `${idx * 40}ms`;
-        });
-
-        const staggerKids = section.querySelectorAll(".reveal-stagger > *");
-        staggerKids.forEach((el, idx) => {
-          el.style.transitionDelay = `${idx * 120}ms`;
-        });
-      };
-
-      revealEls.forEach(el => applyChipStagger(el));
-
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) entry.target.classList.add("show");
         });
       }, { threshold: 0.15 });
-
       revealEls.forEach(el => io.observe(el));
+    })();
+
+    // ✅ Skills marquee: duplicate track for infinite loop + direction/speed
+    (() => {
+      const marquees = document.querySelectorAll(".skills-marquee");
+
+      marquees.forEach((marquee) => {
+        const track = marquee.querySelector(".skills-track");
+        if (!track) return;
+
+        if (!track.dataset.cloned) {
+          track.innerHTML = track.innerHTML + track.innerHTML;
+          track.dataset.cloned = "true";
+        }
+
+        const dir = marquee.getAttribute("data-direction") || "rtl";
+        const duration = Number(marquee.getAttribute("data-duration") || 18);
+
+        track.style.animation = `${dir === "ltr" ? "marquee-ltr" : "marquee-rtl"} ${duration}s linear infinite`;
+      });
     })();
   </script>
 
