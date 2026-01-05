@@ -65,35 +65,7 @@
     }
     @keyframes blink { 50% { border-color: transparent; } }
 
-    .profile-image-container {
-      position: relative;
-      width: 256px;
-      height: 256px;
-    }
-    @media (min-width: 1024px) {
-      .profile-image-container { width: 320px; height: 320px; }
-    }
-
-    .profile-border {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: conic-gradient(from 180deg, #60a5fa, #a78bfa, #60a5fa);
-      box-shadow: 0 0 50px rgba(96,165,250,0.18), 0 0 50px rgba(167,139,250,0.14);
-    }
-
-    .profile-image-inner {
-      position: relative;
-      width: calc(100% - 16px);
-      height: calc(100% - 16px);
-      margin: 8px;
-      background: black;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    body.light .profile-image-inner { background: white; }
-
+    /* ✅ keep canvas inside hero + don't block clicks */
     #three-bg { pointer-events: none; }
     #three-bg canvas {
       position: absolute;
@@ -101,6 +73,63 @@
       width: 100% !important;
       height: 100% !important;
       pointer-events: none;
+    }
+
+    /* =========================
+       ✅ HERO PHOTO (RECTANGLE STYLE)
+       ========================= */
+    .hero-photo-wrap{
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+    }
+    .hero-photo-frame{
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+    }
+    .hero-photo-frame::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(135deg,
+        rgba(96,165,250,0.35),
+        rgba(167,139,250,0.30),
+        rgba(96,165,250,0.25)
+      );
+      z-index:0;
+      filter: blur(8px);
+      opacity: 0.55;
+    }
+    .hero-photo-frame::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg,
+        rgba(0,0,0,0.10),
+        rgba(0,0,0,0.55)
+      );
+      z-index:1;
+      pointer-events:none;
+    }
+    .hero-photo{
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      object-position: center;
+      display:block;
+    }
+    @media (max-width: 1024px){
+      .hero-photo{ height: 460px; }
+    }
+    @media (max-width: 640px){
+      .hero-photo-wrap{ max-width: 420px; margin-inline: auto; }
+      .hero-photo{ height: 420px; }
     }
 
     /* =========================
@@ -114,14 +143,12 @@
       pointer-events: none;
       transition: max-height 350ms ease, opacity 250ms ease, transform 250ms ease;
     }
-
     #mobile-menu.menu-open {
       max-height: 420px;
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
     }
-
     #mobile-menu .mobile-link {
       opacity: 0;
       transform: translateY(-6px);
@@ -174,7 +201,7 @@
     .reveal.show .edu-stagger > *:nth-child(5) { transition-delay: 480ms; }
 
     /* =========================
-       ✅ PROJECTS: MATCHING ANIMATION
+       ✅ PROJECTS: ANIMATION + THUMB
        ========================= */
     .projects-grid > * {
       opacity: 0;
@@ -236,8 +263,9 @@
         rgba(167,139,250,0.10),
         rgba(96,165,250,0.10)
       );
-      opacity: 0.35;
+      opacity: 0.25;
       transform: translateX(-20%);
+      pointer-events: none;
     }
     .reveal.show .project-thumb::before { animation: thumbMove 3.8s ease-in-out infinite; }
     @keyframes thumbMove {
@@ -272,7 +300,6 @@
       padding-top: 18px;
       border-top: 1px solid rgba(255,255,255,0.08);
     }
-
     .skills-row {
       display: grid;
       grid-template-columns: 130px 1fr;
@@ -283,20 +310,17 @@
     @media (max-width: 768px) {
       .skills-row { grid-template-columns: 1fr; gap: 10px; }
     }
-
     .skills-row-title {
       font-size: 1rem;
       font-weight: 700;
       color: #e5e7eb;
     }
-
     .skills-marquee {
       position: relative;
       overflow: hidden;
       padding: 6px 0;
       border-radius: 14px;
     }
-
     .skills-marquee::before,
     .skills-marquee::after {
       content: "";
@@ -315,14 +339,12 @@
       right: 0;
       background: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
     }
-
     .skills-track {
       display: flex;
       gap: 12px;
       width: max-content;
       will-change: transform;
     }
-
     .skill-pill {
       position: relative;
       min-width: 170px;
@@ -338,13 +360,11 @@
       overflow: hidden;
       transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
     }
-
     .skill-pill:hover {
       transform: translateY(-6px);
       border-color: rgba(167,139,250,0.40);
       box-shadow: 0 0 32px rgba(96,165,250,0.18), 0 0 26px rgba(167,139,250,0.14);
     }
-
     .pill-glow {
       position: absolute;
       inset: -45%;
@@ -355,7 +375,6 @@
       opacity: 1;
       transform: rotate(10deg);
     }
-
     .pill-icon {
       position: relative;
       z-index: 1;
@@ -367,7 +386,6 @@
       filter: drop-shadow(0 0 12px rgba(96,165,250,0.25));
     }
     .pill-icon svg { width: 34px; height: 34px; }
-
     .pill-text {
       position: relative;
       z-index: 1;
@@ -377,18 +395,9 @@
       color: #e5e7eb;
       letter-spacing: 0.2px;
     }
-
-    @keyframes marquee-ltr {
-      from { transform: translateX(-50%); }
-      to   { transform: translateX(0%); }
-    }
-    @keyframes marquee-rtl {
-      from { transform: translateX(0%); }
-      to   { transform: translateX(-50%); }
-    }
-
+    @keyframes marquee-ltr { from { transform: translateX(-50%); } to { transform: translateX(0%); } }
+    @keyframes marquee-rtl { from { transform: translateX(0%); } to { transform: translateX(-50%); } }
     .skills-marquee:hover .skills-track { animation-play-state: paused; }
-
     @media (prefers-reduced-motion: reduce) {
       .skills-track { animation: none !important; transform: translateX(0) !important; }
     }
@@ -406,14 +415,12 @@
       padding: 18px;
     }
     .cv-modal.open { display: flex; }
-
     .cv-modal-backdrop {
       position: absolute;
       inset: 0;
       background: rgba(0,0,0,0.72);
       backdrop-filter: blur(6px);
     }
-
     .cv-modal-panel {
       position: relative;
       width: min(1050px, 96vw);
@@ -424,7 +431,6 @@
       background: rgba(10,10,10,0.88);
       box-shadow: 0 30px 90px rgba(0,0,0,0.55);
     }
-
     .cv-modal-topbar {
       display: flex;
       align-items: center;
@@ -433,13 +439,11 @@
       padding: 12px 14px;
       border-bottom: 1px solid rgba(255,255,255,0.10);
     }
-
     .cv-modal-actions {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
-
     .cv-btn {
       display: inline-flex;
       align-items: center;
@@ -457,13 +461,11 @@
       background: rgba(255,255,255,0.10);
       border-color: rgba(96,165,250,0.35);
     }
-
     .cv-btn-primary {
       border-color: rgba(37,99,235,0.6);
       background: rgba(37,99,235,0.25);
     }
     .cv-btn-primary:hover { background: rgba(37,99,235,0.35); }
-
     .cv-close {
       width: 40px;
       height: 40px;
@@ -479,7 +481,6 @@
       transform: translateY(-2px);
       background: rgba(255,255,255,0.10);
     }
-
     .cv-frame-wrap {
       width: 100%;
       height: calc(100% - 58px);
@@ -516,7 +517,9 @@
           <a href="#projects" class="hover:text-primary-300 transition-colors">Projects</a>
           <a href="#contact" class="hover:text-primary-300 transition-colors">Contact</a>
 
-        
+          <!-- ✅ CV (opens modal) -->
+          <a href="asset/KAVEESHA.CV.pdf" class="hover:text-primary-300 transition-colors cv-open">CV</a>
+
           <button class="theme-toggle-btn p-2 rounded-lg hover:text-primary-300 transition-colors" aria-label="Toggle theme">
             <i class="theme-toggle-dark-icon hidden w-5 h-5" data-lucide="moon"></i>
             <i class="theme-toggle-light-icon w-5 h-5" data-lucide="sun"></i>
@@ -583,11 +586,11 @@
         </a>
       </div>
 
+      <!-- ✅ NEW RECTANGLE PHOTO -->
       <div class="flex justify-center lg:justify-end">
-        <div class="profile-image-container">
-          <div class="profile-border"></div>
-          <div class="profile-image-inner">
-            <img src="asset/me.jpeg" alt="Kaveesha Heshan" class="w-full h-full object-cover">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-frame">
+            <img src="asset/me.jpeg" alt="Kaveesha Heshan" class="hero-photo">
           </div>
         </div>
       </div>
@@ -774,61 +777,48 @@
     </div>
   </section>
 
-  <!-- ================= PROJECTS ================= -->
- <section id="projects" class="py-20 px-6 lg:px-8 reveal">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-4xl lg:text-5xl font-bold mb-12">
-      <span class="gradient-text">Featured Projects</span>
-    </h2>
+  <!-- ================= PROJECTS (ONLY ONE SECTION) ================= -->
+  <section id="projects" class="py-20 px-6 lg:px-8 reveal">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl lg:text-5xl font-bold mb-12">
+        <span class="gradient-text">Featured Projects</span>
+      </h2>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 projects-grid">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 projects-grid">
 
-      <!-- Project 1 -->
-      <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-primary-600 transition-all project-card">
-        
-        <!-- ✅ Image Added Here -->
-        <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb">
-          <img
-            src="asset/myfin.png"
-            alt="E-Commerce Platform Preview"
-            class="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
-
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-primary-400 mb-3">E-Commerce Platform</h3>
-          <p class="text-gray-600 dark:text-gray-400 mb-4">
-            Full-stack e-commerce solution built with React, Node.js, and MongoDB.
-            Features include user authentication, payment integration, and admin dashboard.
-          </p>
-
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">React</span>
-            <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">Node.js</span>
-            <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">MongoDB</span>
-          </div>
-
-          <div class="flex space-x-4">
-            <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center project-link">
-              <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> Demo
-            </a>
-            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center project-link">
-              <i data-lucide="github" class="w-4 h-4 mr-2"></i> Code
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- (Keep your other project cards here as they are) -->
-
-    </div>
-  </div>
-</section>
-
-
+        <!-- Project 1 -->
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-primary-600 transition-all project-card">
-          <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb"></div>
+          <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb">
+            <img src="asset/myfin.png" alt="E-Commerce Platform Preview" class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-primary-400 mb-3">E-Commerce Platform</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4">
+              Full-stack e-commerce solution built with React, Node.js, and MongoDB.
+              Features include user authentication, payment integration, and admin dashboard.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">React</span>
+              <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">Node.js</span>
+              <span class="px-3 py-1 bg-primary-900/50 text-primary-400 rounded-full text-sm">MongoDB</span>
+            </div>
+            <div class="flex space-x-4">
+              <a href="#" class="text-primary-400 hover:text-primary-300 flex items-center project-link">
+                <i data-lucide="external-link" class="w-4 h-4 mr-2"></i> Demo
+              </a>
+              <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 flex items-center project-link">
+                <i data-lucide="github" class="w-4 h-4 mr-2"></i> Code
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 (replace image file if you want) -->
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-primary-600 transition-all project-card">
+          <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb">
+            <img src="asset/task.png" alt="Task Management App Preview" class="w-full h-full object-cover" loading="lazy"
+                 onerror="this.style.display='none';" />
+          </div>
           <div class="p-6">
             <h3 class="text-xl font-semibold text-primary-400 mb-3">Task Management App</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-4">
@@ -851,8 +841,12 @@
           </div>
         </div>
 
+        <!-- Project 3 (replace image file if you want) -->
         <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden hover:border-primary-600 transition-all project-card">
-          <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb"></div>
+          <div class="h-48 bg-gray-100 dark:bg-gray-800 project-thumb">
+            <img src="asset/weather.png" alt="Weather Analytics Dashboard Preview" class="w-full h-full object-cover" loading="lazy"
+                 onerror="this.style.display='none';" />
+          </div>
           <div class="p-6">
             <h3 class="text-xl font-semibold text-primary-400 mb-3">Weather Analytics Dashboard</h3>
             <p class="text-gray-600 dark:text-gray-400 mb-4">
@@ -874,8 +868,8 @@
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </section>
 
@@ -1115,7 +1109,6 @@
 
       document.querySelectorAll(".cv-open").forEach(a => {
         a.addEventListener("click", (e) => {
-          // allow open in new tab with ctrl/cmd/shift click
           if (e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
           e.preventDefault();
           openCV();
